@@ -11,11 +11,125 @@ Além disso, a aplicação utiliza **Firebase** para armazenamento de dados e au
 
 ---
 
+# 🔑 Configuração do Firebase no Render
+
+- Para garantir que a API funcione corretamente com o Firebase, foi configurada a variável de ambiente FIREBASE_CREDENTIALS no Render. Agora, a aplicação pode ler as credenciais tanto da variável de ambiente (em produção) quanto do arquivo local (serviceAccountKey.json) durante o desenvolvimento.
+
 ## 🎯 **Objetivos do Projeto**
 - ✅ Desenvolver uma **API REST** em **Spring Boot** para gerenciar os produtos da loja.
 - ✅ Criar um **front-end moderno e responsivo** em **Angular**.
 - ✅ Utilizar **Firebase Firestore** para armazenamento dos produtos.
 - ✅ Implementar **Firebase Authentication** para gerenciar usuários.
+
+---
+
+# ⚙️ Pré-requisitos para Rodar o Projeto Localmente
+
+Antes de rodar o projeto, certifique-se de ter os seguintes pré-requisitos instalados:
+
+## 🔹 Backend (Spring Boot)
+1. Java JDK 17 - Necessário para compilar e executar a aplicação Spring Boot.
+
+[Download do JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+
+Verifique a instalação com:
+```
+java -version
+```
+2. Maven - Para gerenciar dependências e compilar o projeto.
+
+[Instalar Maven](https://maven.apache.org/install.html)
+
+Verifique a instalação com:
+
+```
+mvn -version
+```
+
+3. Docker (Opcional, caso queira rodar via container)
+
+[Baixar Docker](https://github.com/jxhnlcs/DockerLesson)
+
+Verifique a instalação com:
+
+```
+docker --version
+```
+
+## 🔹 Frontend (Angular)
+
+Node.js e NPM - Necessário para rodar o Angular.
+
+[Baixar Node.js](https://nodejs.org/)
+
+Verifique a instalação com:
+
+```
+node -v
+npm -v
+```
+
+Angular CLI - Ferramenta de linha de comando para Angular.
+
+Instale com:
+
+```
+npm install -g @angular/cli
+```
+
+Verifique a instalação com:
+
+```
+ng version
+```
+
+## 🔹 Firebase
+
+1. Criar um Projeto no Firebase
+
+2. Acesse Firebase Console
+
+3. Crie um novo projeto.
+
+4. Vá para Configurações do Projeto > Contas de Serviço e gere uma chave JSON.
+
+5. Salve este arquivo como backend/src/main/resources/serviceAccountKey.json para rodar localmente.
+
+---
+
+# 📖 Como Rodar o Projeto Localmente
+
+Clone o repositório:
+```
+git clone https://github.com/jxhnlcs/fullstack_eccomerce.git
+```
+
+- Coloque o arquivo serviceAccountKey.json que você irá gerar no seu projeto do firebase no diretorio **backend/src/main/resources/** (para desenvolvimento):
+
+Execute o backend:
+
+```
+cd backend
+mvn clean install
+mvn spring-boot:run
+```
+
+Caso queira rodar o backend com Docker:
+
+```
+docker build -t techstore-api .
+docker run -p 8080:8080 techstore-api
+```
+
+Execute o frontend:
+
+```
+cd frontend
+npm install
+ng serve
+```
+
+- Agora, a aplicação estará rodando em http://localhost:4200 e a API em http://localhost:8080!
 
 ## 🛠 **Tecnologias Utilizadas**
 ### **🚀 Back-end (API)**
@@ -28,3 +142,15 @@ Além disso, a aplicação utiliza **Firebase** para armazenamento de dados e au
 - **Angular** (Framework para SPAs)
 - **Tailwind CSS** (Estilização moderna e responsiva)
 ---
+
+# 🌍 Implantação em Produção
+
+Atualmente, o projeto está sendo implantado utilizando:
+
+1. Render para hospedar o backend com Docker.
+
+2. Firebase para autenticação e banco de dados.
+
+3. Vercel será utilizado para hospedar o frontend em breve.
+
+A API foi configurada no Render utilizando o Dockerfile mencionado acima, garantindo um ambiente estável e escalável. Em breve, o frontend será implantado na Vercel, tornando o sistema completamente acessível online.
