@@ -28,13 +28,13 @@ public class FirebaseConfig {
             System.out.println("🔹 Carregando credenciais do Firebase a partir da variável de ambiente...");
             options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(
-                            new ByteArrayInputStream(firebaseCredentials.getBytes(StandardCharsets.UTF_8))
-                    ))
+                            new ByteArrayInputStream(firebaseCredentials.getBytes(StandardCharsets.UTF_8))))
                     .build();
         } else {
             File file = new File("src/main/resources/serviceAccountKey.json");
             if (!file.exists()) {
-                throw new IllegalStateException("❌ ERRO: Credenciais do Firebase não encontradas! Defina FIREBASE_CREDENTIALS no ambiente ou adicione serviceAccountKey.json.");
+                throw new IllegalStateException(
+                        "❌ ERRO: Credenciais do Firebase não encontradas! Defina FIREBASE_CREDENTIALS no ambiente ou adicione serviceAccountKey.json.");
             }
 
             System.out.println("🖥️ Carregando credenciais do Firebase a partir do arquivo local...");

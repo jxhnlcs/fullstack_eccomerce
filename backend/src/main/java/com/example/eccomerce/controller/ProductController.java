@@ -18,9 +18,14 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.getAllProducts();
-        return ResponseEntity.ok(products);
+    public ResponseEntity<?> getAllProducts() {
+        try {
+            List<Product> products = productService.getAllProducts();
+            return ResponseEntity.ok(products);
+        } catch (ExecutionException | InterruptedException e) {
+            return ResponseEntity.status(500)
+                    .body("Erro ao buscar produtos: " + e.getMessage());
+        }
     }
 
     @PostMapping("/products")
