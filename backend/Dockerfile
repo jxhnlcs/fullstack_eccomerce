@@ -1,14 +1,16 @@
-# Usando OpenJDK 17
-FROM openjdk:17-jdk
-
-# Criando diretório da aplicação
+# Etapa 1: Construir o JAR com Maven
+FROM maven:3.8.6-openjdk-17 AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copiando o JAR gerado
-COPY target/*.jar app.jar
+# Etapa 2: Rodar o JAR com OpenJDK 17
+FROM openjdk:17-jdk
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 
-# Expondo a porta usada pelo Spring Boot
+# Expor porta do Spring Boot
 EXPOSE 8080
 
-# Rodando a aplicação
-CMD ["java", "-jar", "app.jar"]
+# Executar a aplicação
+ENTRYPOINT ["java", "-jar", "app.jar"]
