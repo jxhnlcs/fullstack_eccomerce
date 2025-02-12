@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class FirebaseController {
 
-    @GetMapping("/hello")
+    @GetMapping("/firebase")
     public String helloFirebase() {
         return "Conexão com Firebase funcionando!";
     }

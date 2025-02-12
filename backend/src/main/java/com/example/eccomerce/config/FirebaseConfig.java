@@ -1,8 +1,10 @@
 package com.example.eccomerce.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Configuration
 public class FirebaseConfig {
@@ -42,6 +45,17 @@ public class FirebaseConfig {
                     .build();
         }
 
-        return FirebaseApp.initializeApp(options);
+        // Verifica se o FirebaseApp já foi inicializado para evitar erros
+        List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
+        if (firebaseApps.isEmpty()) {
+            return FirebaseApp.initializeApp(options);
+        } else {
+            return firebaseApps.get(0); // Retorna a instância existente
+        }
+    }
+
+    @Bean
+    public Firestore firestore(FirebaseApp firebaseApp) {
+        return FirestoreClient.getFirestore(firebaseApp);
     }
 }
