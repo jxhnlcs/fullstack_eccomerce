@@ -4,12 +4,14 @@ import com.example.eccomerce.dto.ProductDTO;
 import com.example.eccomerce.model.Product;
 import com.example.eccomerce.repository.ProductRepository;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -28,11 +30,17 @@ public class ProductService {
                 product.setPrice(productDTO.getPrice());
                 product.setStockQuantity(productDTO.getStockQuantity());
 
+                // Salva no banco relacional
                 product = productRepository.save(product);
 
-                // Criar um documento no Firestore
-                String documentId = "product-" + product.getId();
-                WriteResult writeResult = firestore.collection("products").document(documentId).set(product).get();
+                // Gera um ID único para o Firestore
+                String documentId = UUID.randomUUID().toString();
+
+                // Salva no Firestore
+                WriteResult writeResult = firestore.collection("products")
+                                .document(documentId)
+                                .set(product)
+                                .get();
 
                 System.out.println("Produto salvo no Firestore! Atualizado em: " + writeResult.getUpdateTime());
 
@@ -43,10 +51,12 @@ public class ProductService {
                 List<Product> products = new ArrayList<>();
 
                 // Buscar todos os documentos na coleção "products"
-                firestore.collection("products").get().get().getDocuments().forEach(document -> {
+                List<QueryDocumentSnapshot> documents = firestore.collection("products").get().get().getDocuments();
+
+                for (QueryDocumentSnapshot document : documents) {
                         Product product = document.toObject(Product.class);
                         products.add(product);
-                });
+                }
 
                 return products;
         }
