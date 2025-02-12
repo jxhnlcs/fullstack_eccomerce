@@ -30,7 +30,7 @@ public class ProductService {
         product = productRepository.save(product);
 
         // Criar um documento no Firestore
-        String documentId = "product-" + product.getId(); // Define um ID único baseado no MySQL
+        String documentId = "product-" + product.getId();
         WriteResult writeResult = firestore.collection("products").document(documentId).set(product).get();
 
         System.out.println("Produto salvo no Firestore! Atualizado em: " + writeResult.getUpdateTime());

@@ -22,7 +22,6 @@ public class FirebaseConfig {
     public FirebaseApp firebaseApp() throws IOException {
         FirebaseOptions options;
 
-        // 1️⃣ Tenta carregar as credenciais do ambiente (Render)
         String firebaseCredentials = System.getenv("FIREBASE_CREDENTIALS");
 
         if (firebaseCredentials != null && !firebaseCredentials.isEmpty()) {
@@ -33,7 +32,6 @@ public class FirebaseConfig {
                     ))
                     .build();
         } else {
-            // 2️⃣ Se não existir no ambiente, tenta carregar do arquivo local (para desenvolvimento)
             File file = new File("src/main/resources/serviceAccountKey.json");
             if (!file.exists()) {
                 throw new IllegalStateException("❌ ERRO: Credenciais do Firebase não encontradas! Defina FIREBASE_CREDENTIALS no ambiente ou adicione serviceAccountKey.json.");
@@ -45,12 +43,11 @@ public class FirebaseConfig {
                     .build();
         }
 
-        // Verifica se o FirebaseApp já foi inicializado para evitar erros
         List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
         if (firebaseApps.isEmpty()) {
             return FirebaseApp.initializeApp(options);
         } else {
-            return firebaseApps.get(0); // Retorna a instância existente
+            return firebaseApps.get(0);
         }
     }
 
