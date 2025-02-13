@@ -1,6 +1,7 @@
 package com.example.eccomerce.service;
 
 import com.example.eccomerce.dto.ProductDTO;
+import com.example.eccomerce.exception.ProductNotFoundException;
 import com.example.eccomerce.model.Product;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
@@ -40,7 +41,7 @@ public class ProductService {
                 product.setDescription(productDTO.getDescription());
                 product.setPrice(productDTO.getPrice());
                 product.setStockQuantity(productDTO.getStockQuantity());
-
+                
                 String documentId = UUID.randomUUID().toString();
 
                 Map<String, Object> productData = new HashMap<>();
@@ -51,8 +52,18 @@ public class ProductService {
 
                 WriteResult writeResult = firestore.collection("products").document(documentId).set(productData).get();
 
-                System.out.println("Produto salvo no Firestore! Atualizado em: " + writeResult.getUpdateTime());
+                System.out.println("Produto salvo no Firestore em: " + writeResult.getUpdateTime());
 
                 return product;
+        }
+
+        public Product getProductById(String documentId) throws ExecutionException, InterruptedException {
+                var document = firestore.collection("products").document(documentId).get().get();
+
+                if (!document.exists()) {
+                        throw new ProductNotFoundException("Produto com ID " + documentId + " não encontrado.");
+                }
+
+                return document.toObject(Product.class);
         }
 }
