@@ -2,7 +2,6 @@ package com.example.eccomerce.service;
 
 import com.example.eccomerce.dto.ProductDTO;
 import com.example.eccomerce.model.Product;
-import com.example.eccomerce.repository.ProductRepository;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.WriteResult;
@@ -10,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -18,39 +19,11 @@ import java.util.concurrent.ExecutionException;
 public class ProductService {
 
         @Autowired
-        private ProductRepository productRepository;
-
-        @Autowired
         private Firestore firestore;
-
-        public Product createProduct(ProductDTO productDTO) throws ExecutionException, InterruptedException {
-                Product product = new Product();
-                product.setName(productDTO.getName());
-                product.setDescription(productDTO.getDescription());
-                product.setPrice(productDTO.getPrice());
-                product.setStockQuantity(productDTO.getStockQuantity());
-
-                // Salva no banco relacional
-                product = productRepository.save(product);
-
-                // Gera um ID único para o Firestore
-                String documentId = UUID.randomUUID().toString();
-
-                // Salva no Firestore
-                WriteResult writeResult = firestore.collection("products")
-                                .document(documentId)
-                                .set(product)
-                                .get();
-
-                System.out.println("Produto salvo no Firestore! Atualizado em: " + writeResult.getUpdateTime());
-
-                return product;
-        }
 
         public List<Product> getAllProducts() throws ExecutionException, InterruptedException {
                 List<Product> products = new ArrayList<>();
 
-                // Buscar todos os documentos na coleção "products"
                 List<QueryDocumentSnapshot> documents = firestore.collection("products").get().get().getDocuments();
 
                 for (QueryDocumentSnapshot document : documents) {
@@ -59,5 +32,27 @@ public class ProductService {
                 }
 
                 return products;
+        }
+
+        public Product createProduct(ProductDTO productDTO) throws ExecutionException, InterruptedException {
+                Product product = new Product();
+                product.setName(productDTO.getName());
+                product.setDescription(productDTO.getDescription());
+                product.setPrice(productDTO.getPrice());
+                product.setStockQuantity(productDTO.getStockQuantity());
+
+                String documentId = UUID.randomUUID().toString();
+
+                Map<String, Object> productData = new HashMap<>();
+                productData.put("name", product.getName());
+                productData.put("description", product.getDescription());
+                productData.put("price", product.getPrice());
+                productData.put("stockQuantity", product.getStockQuantity());
+
+                WriteResult writeResult = firestore.collection("products").document(documentId).set(productData).get();
+
+                System.out.println("Produto salvo no Firestore! Atualizado em: " + writeResult.getUpdateTime());
+
+                return product;
         }
 }

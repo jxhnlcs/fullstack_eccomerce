@@ -34,7 +34,7 @@ public class FirebaseConfig {
             File file = new File("src/main/resources/serviceAccountKey.json");
             if (!file.exists()) {
                 throw new IllegalStateException(
-                        "❌ ERRO: Credenciais do Firebase não encontradas! Defina FIREBASE_CREDENTIALS no ambiente ou adicione serviceAccountKey.json.");
+                        "ERRO: Credenciais do Firebase não encontradas! Defina FIREBASE_CREDENTIALS no ambiente ou adicione serviceAccountKey.json.");
             }
 
             System.out.println("🖥️ Carregando credenciais do Firebase a partir do arquivo local...");
