@@ -26,7 +26,7 @@ public class ProductController {
             return ResponseEntity.ok(products);
         } catch (ExecutionException | InterruptedException e) {
             return ResponseEntity.status(500)
-                    .body(new ApiResponse("❌ Erro ao buscar produtos: " + e.getMessage()));
+                    .body(new ApiResponse("Erro ao buscar produtos: " + e.getMessage()));
         }
     }
 

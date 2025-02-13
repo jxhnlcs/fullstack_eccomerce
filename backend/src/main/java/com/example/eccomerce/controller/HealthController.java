@@ -9,6 +9,6 @@ public class HealthController {
 
   @GetMapping("/ping")
   public ResponseEntity<String> ping() {
-    return ResponseEntity.ok("API is alive! 🟢");
+    return ResponseEntity.ok("Ping!");
   }
 }
