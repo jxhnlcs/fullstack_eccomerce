@@ -14,5 +14,5 @@ public class Product {
     private String description;
     private Double price;
     private Integer stockQuantity;
-    private String userId; // Associado ao usuário autenticado
+    private String userId;
 }
