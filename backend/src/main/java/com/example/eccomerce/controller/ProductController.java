@@ -47,7 +47,8 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<?> createProduct(@RequestHeader("Authorization") String authToken, @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<?> createProduct(@RequestHeader("Authorization") String authToken,
+            @RequestBody ProductDTO productDTO) {
         try {
             String userId = authService.verifyToken(authToken.replace("Bearer ", ""));
             Product product = productService.createProduct(productDTO, userId);
@@ -58,4 +59,35 @@ public class ProductController {
             return ResponseEntity.status(500).body(new ApiResponse("Erro ao salvar produto: " + e.getMessage()));
         }
     }
+
+    @PutMapping("/products/{id}")
+    public ResponseEntity<?> updateProduct(
+            @RequestHeader("Authorization") String authToken,
+            @PathVariable String id,
+            @RequestBody ProductDTO productDTO) {
+        try {
+            String userId = authService.verifyToken(authToken.replace("Bearer ", ""));
+            Product updatedProduct = productService.updateProduct(id, productDTO, userId);
+            return ResponseEntity.ok(updatedProduct);
+        } catch (FirebaseAuthException e) {
+            return ResponseEntity.status(401).body(new ApiResponse("Token inválido ou expirado."));
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(404).body(new ApiResponse(e.getMessage()));
+        } catch (ExecutionException | InterruptedException e) {
+            return ResponseEntity.status(500).body(new ApiResponse("Erro ao atualizar produto: " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable String id) {
+        try {
+            productService.deleteProduct(id);
+            return ResponseEntity.ok(new ApiResponse("Produto deletado com sucesso!"));
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(404).body(new ApiResponse(e.getMessage()));
+        } catch (ExecutionException | InterruptedException e) {
+            return ResponseEntity.status(500).body(new ApiResponse("Erro ao deletar produto: " + e.getMessage()));
+        }
+    }
+
 }
