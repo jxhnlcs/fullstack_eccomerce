@@ -90,4 +90,17 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/products/user")
+    public ResponseEntity<?> getProductsByUser(@RequestHeader("Authorization") String authToken) {
+        try {
+            String userId = authService.verifyToken(authToken.replace("Bearer ", "")); // Extrai o userId do token
+            List<Product> products = productService.getProductsByUserId(userId);
+            return ResponseEntity.ok(products);
+        } catch (FirebaseAuthException e) {
+            return ResponseEntity.status(401).body(new ApiResponse("Token inválido ou expirado."));
+        } catch (ExecutionException | InterruptedException e) {
+            return ResponseEntity.status(500).body(new ApiResponse("Erro ao buscar produtos: " + e.getMessage()));
+        }
+    }
+
 }

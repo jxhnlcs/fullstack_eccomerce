@@ -24,6 +24,7 @@ public class ProductService {
 
                 for (QueryDocumentSnapshot document : documents) {
                         Product product = document.toObject(Product.class);
+                        product.setId(document.getId()); // Adiciona o ID do Firestore ao objeto
                         products.add(product);
                 }
 
@@ -50,6 +51,7 @@ public class ProductService {
                 WriteResult writeResult = firestore.collection("products").document(documentId).set(productData).get();
                 System.out.println("Produto salvo no Firestore em: " + writeResult.getUpdateTime());
 
+                product.setId(documentId); // Adiciona o ID ao objeto antes de retornar
                 return product;
         }
 
@@ -58,7 +60,10 @@ public class ProductService {
                 if (!document.exists()) {
                         throw new ProductNotFoundException("Produto com ID " + documentId + " não encontrado.");
                 }
-                return document.toObject(Product.class);
+
+                Product product = document.toObject(Product.class);
+                product.setId(documentId); // Adiciona o ID ao objeto
+                return product;
         }
 
         public Product updateProduct(String documentId, ProductDTO productDTO, String userId)
@@ -94,4 +99,22 @@ public class ProductService {
 
                 System.out.println("Produto deletado do Firestore: " + documentId);
         }
+
+        public List<Product> getProductsByUserId(String userId) throws ExecutionException, InterruptedException {
+                List<Product> products = new ArrayList<>();
+                List<QueryDocumentSnapshot> documents = firestore.collection("products")
+                                .whereEqualTo("userId", userId)
+                                .get()
+                                .get()
+                                .getDocuments();
+
+                for (QueryDocumentSnapshot document : documents) {
+                        Product product = document.toObject(Product.class);
+                        product.setId(document.getId()); // Adiciona o ID ao objeto
+                        products.add(product);
+                }
+
+                return products;
+        }
+
 }
