@@ -16,7 +16,7 @@ import java.net.http.HttpResponse;
 @Service
 public class AuthService {
 
-    private final String FIREBASE_API_KEY = "AIzaSyDVT3kHCSSWJzlmoiY87wB-6SLfrwWXhEk";
+    private final String FIREBASE_API_KEY = "AIzaSyCl3_9eNpsrbTtaEPZJxgJW07RmyPICu2w";
 
     public AuthResponseDTO login(String email, String password) {
         try {
