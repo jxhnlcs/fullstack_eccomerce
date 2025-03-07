@@ -112,7 +112,7 @@ Execute o frontend:
 ```
 cd frontend
 npm install
-ng serve
+npm run dev
 ```
 
 - Agora, a aplicação estará rodando em http://localhost:4200 e a API em http://localhost:8080!
