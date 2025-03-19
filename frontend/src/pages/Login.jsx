@@ -57,9 +57,9 @@ const Login = () => {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen">
       {/* Seção Esquerda: Formulário de Login */}
-      <div className="w-1/2 flex items-center justify-center bg-white p-12">
+      <div className="w-full md:w-1/2 flex items-center justify-center bg-white p-8 md:p-12">
         <div className="w-full max-w-md">
           <h1 className="text-6xl font-bold mb-6 text-gray-800">TechStore</h1>
           <h2 className="text-3xl font-bold mb-6 text-gray-800">Entrar</h2>
@@ -136,7 +136,7 @@ const Login = () => {
       </div>
 
       {/* Seção Direita: Banner sobre E-commerce */}
-      <div className="w-1/2 bg-gradient-to-r from-blue-600 to-blue-800 flex flex-col justify-center items-center p-12 text-white">
+      <div className="w-screen bg-gradient-to-r from-blue-600 to-blue-800 flex flex-col justify-center items-center p-12 text-white">
         <div className="max-w-md text-center">
           <h2 className="text-3xl font-bold mb-4">Gerencie seu E-commerce</h2>
           <p className="text-gray-200">
