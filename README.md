@@ -1,6 +1,6 @@
 # 🛒 TechStore - Sistema de Gerenciamento de Produtos
 
-🚀 **TechStore** é um sistema completo para gerenciamento de produtos em uma loja virtual. Desenvolvido como parte de um trabalho acadêmico, o projeto utiliza **Spring Boot**, **Angular** e **Firebase** para criar uma aplicação web funcional, segura e escalável.
+🚀 **TechStore** é um sistema completo para gerenciamento de produtos em uma loja virtual. Desenvolvido como parte de um trabalho acadêmico, o projeto utiliza **Spring Boot**, **React** e **Firebase** para criar uma aplicação web funcional, segura e escalável.
 
 ---
 
@@ -17,7 +17,7 @@ Além disso, a aplicação utiliza **Firebase** para armazenamento de dados e au
 
 ## 🎯 **Objetivos do Projeto**
 - ✅ Desenvolver uma **API REST** em **Spring Boot** para gerenciar os produtos da loja.
-- ✅ Criar um **front-end moderno e responsivo** em **Angular**.
+- ✅ Criar um **front-end moderno e responsivo** em **React**.
 - ✅ Utilizar **Firebase Firestore** para armazenamento dos produtos.
 - ✅ Implementar **Firebase Authentication** para gerenciar usuários.
 
@@ -56,9 +56,9 @@ Verifique a instalação com:
 docker --version
 ```
 
-## 🔹 Frontend (Angular)
+## 🔹 Frontend (React)
 
-Node.js e NPM - Necessário para rodar o Angular.
+Node.js e NPM - Necessário para rodar o React.
 
 [Baixar Node.js](https://nodejs.org/)
 
@@ -67,20 +67,6 @@ Verifique a instalação com:
 ```
 node -v
 npm -v
-```
-
-Angular CLI - Ferramenta de linha de comando para Angular.
-
-Instale com:
-
-```
-npm install -g @angular/cli
-```
-
-Verifique a instalação com:
-
-```
-ng version
 ```
 
 ## 🔹 Firebase
@@ -126,7 +112,7 @@ Execute o frontend:
 ```
 cd frontend
 npm install
-ng serve
+npm run dev
 ```
 
 - Agora, a aplicação estará rodando em http://localhost:4200 e a API em http://localhost:8080!
@@ -139,7 +125,7 @@ ng serve
 - **Firebase Authentication** (Autenticação de usuários)
 
 ### **💻 Front-end**
-- **Angular** (Framework para SPAs)
+- **React** (Framework para Frontend)
 - **Tailwind CSS** (Estilização moderna e responsiva)
 ---
 
