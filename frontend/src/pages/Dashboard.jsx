@@ -277,20 +277,22 @@ const Dashboard = () => {
                 </p>
               )}
 
-              <div className="flex justify-end gap-2 mt-4">
-                <button
-                  onClick={() => handleOpenModal(product)}
-                  className="text-blue-500 hover:text-blue-700"
-                >
-                  <Edit size={20} />
-                </button>
-                <button
-                  onClick={() => handleDeleteProduct(product.id)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  <Trash2 size={20} />
-                </button>
-              </div>
+              {product.userId === userId && (
+                <div className="flex justify-end gap-2 mt-4">
+                  <button
+                    onClick={() => handleOpenModal(product)}
+                    className="text-blue-500 hover:text-blue-700"
+                  >
+                    <Edit size={20} />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteProduct(product.id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+                </div>
+              )}
             </div>
           ))
         ) : (
