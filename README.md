@@ -139,4 +139,4 @@ Atualmente, o projeto está sendo implantado utilizando:
 
 3. Vercel será utilizado para hospedar o frontend em breve.
 
-A API foi configurada no Render utilizando o Dockerfile mencionado acima, garantindo um ambiente estável e escalável. Em breve, o frontend será implantado na Vercel, tornando o sistema completamente acessível online.
+A API foi configurada no Render utilizando o Dockerfile mencionado acima, garantindo um ambiente estável e escalável. O frontend será implantado na Vercel, tornando o sistema completamente acessível online: https://eccomerce-blush.vercel.app
